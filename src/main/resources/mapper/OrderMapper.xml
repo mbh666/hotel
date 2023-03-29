@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mbh.jiudian.dao.RoomOrderDao">
+    <resultMap id="orderMap" type="com.mbh.jiudian.entity.OrderDto">
+    <result property="imgURL" column="imgUrl"></result>
+    <result property="cid" column="cid"/>
+    <result property="roomdesc" column="roomdesc"/>
+    <result property="ordernumber" column="orderid"/>
+    <result property="realname" column="cname"/>
+    <result property="phone" column="cphone"/>
+    <result property="price" column="price"/>
+    <result property="starttime" column="starttime"/>
+    <result property="endtime" column="endtime"/>
+    </resultMap>
+    <select id="selectOrders" resultMap="orderMap">
+     select room.imgUrl,room.rid,room.roomdesc,room_order.orderid,custom.cname,custom.cphone,room.price,room_order.starttime,room_order.endtime
+     from room_order
+     left join custom on room_order.cid = custom.cid
+     left join room on room_order.rid = room.rid
+     where custom.cid = #{cid};
+     </select>
+</mapper>
